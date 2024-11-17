@@ -1,55 +1,31 @@
-# The name of the project.
-name: express-postgresql-starter
-# The region where the project is deployed. Available regions: us-east-1, eu-central-1
-region: us-east-1
-# The version of the Genezio YAML configuration to parse.
-yamlVersion: 2
 backend:
-  # The root directory of the backend.
-  path: ./
-  # Information about the backend's programming language.
-  language:
-    # The name of the programming language.
-    name: js
-    # The package manager used by the backend.
-    packageManager: npm
-  # Information about the backend's functions.
-  functions:
-    # The name (label) of the function.
-    - name: express-postgresql-starter
-      # The path to the function's code.
-      path: ./
-      # The entry point for the function.
-      entry: app.mjs
-      # The compatibility of the function handler.
-      type: httpServer
-  # Scripts are running in the specified `path` directory.
-  scripts:
-    # List of scripts to run before deploying the frontend.
-    deploy: npm install
-    # List of scripts that build your frontend before deployment. It should populate the specified `publish` directory.
-    local: npm install
-
-# Information about the backend's services.
-services:
-  # The name of the service.
-  databases:
-    # The name of the database.
-    - name: my-postgres-db
-      # The region where the database is deployed.
-      region: us-east-1
-      type: postgres-neon
+    functions:
+        - entry: app.mjs
+          name: express-postgresql-starter
+          path: ./
+          type: httpServer
+    language:
+        name: js
+        packageManager: npm
+    path: ./
+    scripts:
+        deploy: npm install
+        local: npm install
 frontend:
-  # The folder where the frontend scripts will run.
-  path: ./frontend
-  # Specifies information about the SDK generation. If not specified, the SDK will not be generated for this frontend.
-  # The directory that will be published to the CDN. It is relative to the `path` directory.
-  publish: ./dist
-  # Environment variables that will be injected into the frontend.
-  scripts:
-    # List of scripts to run before deploying the frontend.
-    deploy: npm install
-    build:
-      - npm run build
-  environment:
-    VITE_API_URL: ${{ backend.functions.express-postgresql-starter.url }}
+    environment:
+        VITE_API_URL: ${{ backend.functions.express-postgresql-starter.url }}
+    path: ./frontend
+    publish: ./dist
+    scripts:
+        build:
+            - npm run build
+        deploy: npm install
+    subdomain: darkorange-few-goldfish
+name: express-postgresql-starter
+region: us-east-1
+services:
+    databases:
+        - name: my-postgres-db
+          region: us-east-1
+          type: postgres-neon
+yamlVersion: 2
